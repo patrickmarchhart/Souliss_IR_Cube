@@ -16,9 +16,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Souliss_IR_Cube.ino" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.Souliss_IR_Cube.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\Arduino\Libraries\souliss\extras\src\IRremoteESP8266\IRremoteESP8266.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\Arduino\Libraries\souliss\extras\src\IRremoteESP8266\IRdebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

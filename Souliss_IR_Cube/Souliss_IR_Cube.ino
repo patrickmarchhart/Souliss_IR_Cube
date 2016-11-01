@@ -28,7 +28,6 @@ for this platform.
 
 /*** All configuration includes should be above this line ***/
 #include "Souliss.h"
-//#include "SoulissIrGateway.h"
 
 
 // This identify the number of the LED logic
@@ -51,17 +50,15 @@ uint8_t ip_gateway[4] = { 192, 168, 178, 1 };
 
 #define RECV_PIN 4  //an IR detector/demodulator is connected to GPIO pin 4
 #define SEND_PIN 5
-IRrecv irrecv(RECV_PIN);
-IRsend irsend(SEND_PIN); //an IR led is connected to GPIO pin 5
+//IRrecv irrecv(RECV_PIN);
+//IRsend irsend(SEND_PIN); //an IR led is connected to GPIO pin 5
 
-decode_results  ir_data;
+//decode_results  ir_data;
 
 void setup()
 {
 	Initialize();
 
-	// Connect to the WiFi network and get an address from DHCP
-	//GetIPAddress();
 
 	Souliss_SetIPAddress(ip_address, subnet_mask, ip_gateway);
 	SetAsGateway(myvNet_address);      // Set this node as gateway for SoulissApp 
@@ -72,13 +69,14 @@ void setup()
 
 
 	Set_T11(SLOT);
-	//Set_T71(SLOT_IR);
-
-	pinMode(OUTPUTPIN, OUTPUT);
-	irrecv.enableIRIn();  // Start the receiver
 	
+	pinMode(OUTPUTPIN, OUTPUT);
+	//irrecv.enableIRIn();  // Start the receiver
+	//irsend.begin();
 	Serial.begin(9600);
-
+	Souliss_ir_setup(SEND_PIN, RECV_PIN);
+	Set_T14(1);
+	pinMode(14, OUTPUT);
 
 }
 
@@ -98,25 +96,19 @@ void loop()
 			Logic_T11(SLOT);
 			DigOut(OUTPUTPIN, Souliss_T1n_Coil, SLOT);
 
-						
+			Logic_T14(1);
+			DigOut(14, Souliss_T1n_Coil, 1);
 
-			if (irrecv.decode(&ir_data))
+			if (irrecv -> decode(&ir_data))
 			{  // Grab an IR code
-				//dumpInfo(&ir_data);           // Output the results
-											  //dumpRaw(&results);            // Output the results in RAW format
-											  //Serial.println("");           // Blank line between entries
-				Souliss_ir_control_remote_node(memory_map, 0xAB02, 0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1BA0F);
-				Souliss_ir_control_local_node(memory_map, 0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1400F);
-				
-				if (ir_data.value == 0x77E17A0F)
-				{
-					delay(1000);
-					//Souliss_ir_send_command(NEC, 32, 0x7E8154AB, 0);
-				}
-
-				delay(100);					  //delay(100);
-				irrecv.resume();              // Prepare for the next value
+				dumpInfo(&ir_data);           						  
+				Souliss_ir_control_remote_node(0xAB02, 0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1BA0F);
+				Souliss_ir_control_local_node(0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1400F);
+				irrecv -> resume();			// Prepare for the next value
+				delay(100);					//delay(100);	             
 			}
+
+			Souliss_ir_control_device(Souliss_T11, 0, 0x1, NEC, 32, 0x7E8154AB);
 			
 		}
 
