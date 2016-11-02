@@ -38,7 +38,7 @@ for this platform.
 #define	OUTPUTPIN	2
 
 
-#define Gateway_address 3
+#define Gateway_address 100
 #define myvNet_address  ip_address[3]   
 #define myvNet_subnet   0xFF00
 #define myvNet_supern   Gateway_address
@@ -99,16 +99,11 @@ void loop()
 			Logic_T14(1);
 			DigOut(14, Souliss_T1n_Coil, 1);
 
-			if (irrecv -> decode(&ir_data))
-			{  // Grab an IR code
-				dumpInfo(&ir_data);           						  
-				Souliss_ir_control_remote_node(0xAB02, 0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1BA0F);
-				Souliss_ir_control_local_node(0, Souliss_T1n_ToggleCmd, ir_data, NEC, 0x77E1400F);
-				irrecv -> resume();			// Prepare for the next value
-				delay(100);					//delay(100);	             
-			}
+			Souliss_ir_control_remote_node(0xAB02, 0, Souliss_T1n_ToggleCmd, NEC, 0x77E1BA0F);
+			Souliss_ir_control_local_node(0, Souliss_T1n_ToggleCmd, NEC, 0x77E1400F);
 
-			Souliss_ir_control_device(Souliss_T11, 0, 0x1, NEC, 32, 0x7E8154AB);
+			Souliss_ir_control_device(Souliss_T14, 1, 0x01, NEC, 32, 0x7E8154AB);
+				
 			
 		}
 
