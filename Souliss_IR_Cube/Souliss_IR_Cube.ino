@@ -18,8 +18,9 @@ for this platform.
 
 // **** Define the WiFi name and password ****
 #define WIFICONF_INSKETCH
-#define WiFi_SSID               "Internetz"
-#define WiFi_Password           "Sagidaned1"    
+#define WiFi_SSID               "ssid"
+#define WiFi_Password           "pw"
+
 
 // Include framework code and libraries
 #include <ESP8266WiFi.h>
@@ -44,8 +45,10 @@ for this platform.
 #define myvNet_supern   Gateway_address
 
 uint8_t ip_address[4] = { 192, 168, 178, 100 };
+//uint8_t ip_address[4] = { 192, 168, 0, 124 };
 uint8_t subnet_mask[4] = { 255, 255, 255, 0 };
 uint8_t ip_gateway[4] = { 192, 168, 178, 1 };
+//uint8_t ip_gateway[4] = { 192, 168, 0, 1 };
 
 
 #define RECV_PIN 4  //an IR detector/demodulator is connected to GPIO pin 4
@@ -97,7 +100,7 @@ void loop()
 			DigOut(OUTPUTPIN, Souliss_T1n_Coil, SLOT);
 
 			Logic_T14(1);
-			DigOut(14, Souliss_T1n_Coil, 1);
+			//DigOut(14, Souliss_T1n_Coil, 1);
 
 			Souliss_ir_control_remote_node(0xAB02, 0, Souliss_T1n_ToggleCmd, NEC, 0x77E1BA0F);
 			Souliss_ir_control_local_node(0, Souliss_T1n_ToggleCmd, NEC, 0x77E1400F);
