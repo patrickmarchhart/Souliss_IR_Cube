@@ -45,10 +45,8 @@ for this platform.
 #define myvNet_supern   Gateway_address
 
 uint8_t ip_address[4] = { 192, 168, 178, 100 };
-//uint8_t ip_address[4] = { 192, 168, 0, 124 };
 uint8_t subnet_mask[4] = { 255, 255, 255, 0 };
 uint8_t ip_gateway[4] = { 192, 168, 178, 1 };
-//uint8_t ip_gateway[4] = { 192, 168, 0, 1 };
 
 
 #define RECV_PIN 4  //an IR detector/demodulator is connected to GPIO pin 4
