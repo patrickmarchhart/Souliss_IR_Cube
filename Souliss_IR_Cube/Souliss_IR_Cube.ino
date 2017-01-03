@@ -55,7 +55,7 @@ void setup()
 	pinMode(OUTPUTPIN, OUTPUT);
 	Serial.begin(9600);
 	
-	//Souliss Configuration
+	//Souliss Initialization
 	Initialize();
 
 	//vNet Configuration
@@ -121,5 +121,3 @@ void loop()
 		FAST_GatewayComms();
 	}
 }
-
-
